@@ -42,7 +42,7 @@ function put_spacing() {
 }
 
 function precmd() {
-print -rP '$fg[cyan]%m: $fg[yellow]$(get_pwd)$(put_spacing)$(git_prompt_info) $(battery_charge)'
+print -rP '$fg[green]%m: $fg[cyan]$(get_pwd)$(put_spacing)$(git_prompt_info) $(battery_charge)'
 }
 
 PROMPT='%{$reset_color%}→ '
