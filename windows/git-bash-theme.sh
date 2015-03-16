@@ -7,13 +7,15 @@ MAGENTA="\033[0;35m"
 CYAN="\033[0;36m"
 WHITE="\033[0;37m"
 RESET="\033[m"
- 
-# Checks if working tree is dirty
 
+GIT_PROMPT_PREFIX="[git:"
+GIT_PROMPT_SUFFIX="]$reset_color"
+GIT_PROMPT_DIRTY="\[${ORANGE}\]+"
+GIT_PROMPT_CLEAN="\[${GREEN}\]"
 
 function parse_git_dirty() {
   local status=$(git status --porcelain 2> /dev/null)
-  
+
   if [[ "$status" != "" ]]; then
     echo "$GIT_PROMPT_DIRTY"
   else
@@ -40,10 +42,8 @@ function spacing() {
   echo "                               "
 }
 
-PS1="\[${GREEN}\]\u \[$BLUE\]\w $(spacing)$(git_prompt_info)
-\$ \[$RESET\]"
+function set_bash_prompt(){
+    PS1="\[${GREEN}\]\u \[$BLUE\]\w $(spacing)$(git_prompt_info)\n$ \[$RESET\]"
+}
 
-GIT_PROMPT_PREFIX="[git:"
-GIT_PROMPT_SUFFIX="]$reset_color"
-GIT_PROMPT_DIRTY="\[${ORANGE}\]+"
-GIT_PROMPT_CLEAN="\[${GREEN}\]"
+PROMPT_COMMAND=set_bash_prompt
