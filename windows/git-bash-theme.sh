@@ -9,13 +9,12 @@ WHITE="\033[0;37m"
 RESET="\033[m"
  
 # Checks if working tree is dirty
-function parse_git_dirty() {
-  local STATUS=''
-  local FLAGS
-  FLAGS=('--porcelain')
-  STATUS=$(command git status ${FLAGS} 2> /dev/null | tail -n1)
 
-  if [[ -n $STATUS ]]; then
+
+function parse_git_dirty() {
+  local status=$(git status --porcelain 2> /dev/null)
+  
+  if [[ "$status" != "" ]]; then
     echo "$GIT_PROMPT_DIRTY"
   else
     echo "$GIT_PROMPT_CLEAN"
@@ -38,7 +37,7 @@ function get_pwd() {
 }
 
 function spacing() {
-  echo "                                           "
+  echo "                               "
 }
 
 PS1="\[${GREEN}\]\u \[$BLUE\]\w $(spacing)$(git_prompt_info)
